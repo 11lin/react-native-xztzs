@@ -127,6 +127,7 @@ export default class MainChatView extends Component {
   unregisterListeners() {
     CountEmitter.removeListener('notifyConversationListRefresh', () => {});
   }
+  _keyExtractor = (item, index) => item.conversationId
   render() {
     return (
       <View style={styles.container}>

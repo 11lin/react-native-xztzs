@@ -192,7 +192,7 @@ export default class ChattingView extends Component {
         console.log('success')
       }
     });
-    
+
     // WebIM.conn.send(msg.body);
     if (this.chatContactId != 'tulingrobot') {
       // 不是跟图灵机器人聊天，则调用环信的发送消息接口
@@ -315,7 +315,7 @@ export default class ChattingView extends Component {
     }
   }
 
-  _keyExtractor = (item, index) => index
+  _keyExtractor = (item, index) => index.toString()
 
   shouldShowTime(item) { // 该方法判断当前消息是否需要显示时间
     let index = item.index;

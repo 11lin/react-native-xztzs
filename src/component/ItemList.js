@@ -60,6 +60,7 @@ export default class ItemList extends React.Component {
                 data = {this.props.data}
                 // renderRow = {(rowData, sectionID, rowID)=>this._renderRow(rowData, sectionID, rowID)}
                 renderItem = {this._renderRow}
+                keyExtractor = {(item,idx)=>idx.toString()}
                 //下拉
                 refreshControl = {this._renderRefreshControl()}
                 //上拉
