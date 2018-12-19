@@ -22,6 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 import HomeRecommendView from './HomeRecommendView';
+import HomeBBSView from './HomeBBSView';
 
 let {width, height} = Dimensions.get('window')
 
@@ -41,8 +42,20 @@ export default class HomeView extends Component {
   };    
   constructor(props){
     super(props)
-    StorageUtil.set('username', {'username': "要你命3000"});
-    Toast.showShortCenter('要你命3000 登录成功');
+    let username = "要你命3000"
+    let nick = "昵称要你命3000"
+    // let avatar = require("../../images/avatar.png")
+
+    StorageUtil.set('username', {'username': username});
+    let userInfo = {
+        username: username,
+        nick: nick,
+        // avatar: avatar
+    };
+    let key = 'userInfo-' + username;
+    StorageUtil.set(key, {'info': userInfo});
+    
+    Toast.showShortCenter(username + ' 登录成功');
   }
   render2() {
       return(
@@ -79,6 +92,7 @@ export default class HomeView extends Component {
             <HomeRecommendView tabLabel="推荐"/>
             <Button tabLabel='关注' onPress={() => this.tabView.goToPage(0)} title='GO to Tab 1'/>
             <Text tabLabel='资讯'>Tab 2</Text>
+            <HomeBBSView tabLabel="论坛"/>
             <Text tabLabel='攻略'>Tab 3</Text>
             <Text tabLabel='公会'>Tab 3</Text>
             <Text tabLabel='女神'>Tab 3</Text>

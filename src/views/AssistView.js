@@ -8,7 +8,8 @@ import {
     Button,
     View,
     Dimensions,
-    Image
+    Image,
+    WebView
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -31,7 +32,9 @@ export default class AssistView extends Component {
   }
   render() {
       return(
-          <Text>辅助</Text>
+          <WebView source={{uri:"https://zt.bbs.ztgame.com/forum.php?mod=forumdisplay&fid=2"}} 
+          onLoadProgress={e => console.log(e.nativeEvent.progress)}
+          />
       )
   }
 }

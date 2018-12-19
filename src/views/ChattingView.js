@@ -122,6 +122,7 @@ export default class ChattingView extends Component {
   }
 
   sendTextMessage(message) { // 发送文本消息
+    let id = Date.now()
     // let id = WebIM.conn.getUniqueId();           // 生成本地消息id
     // let msg = new WebIM.message('txt', id);      // 创建文本消息
     // msg.set({
@@ -134,13 +135,13 @@ export default class ChattingView extends Component {
     //   }
     // });
     // msg.body.chatType = 'singleChat';
-    // if (this.chatContactId != 'tulingrobot') {
+    if (this.chatContactId != 'tulingrobot') {
     //   // 不是跟图灵机器人聊天，则调用环信的发送消息接口
     //   WebIM.conn.send(msg.body);
-    // } else {
+    } else {
       // 跟图灵机器人聊天
       this.chatWithTuling(message);
-    // }
+    }
     // 还需要将本条消息添加到当前会话中
     this.concatMessage({
       'conversationId': ConversationUtil.generateConversationId(this.chatContactId, this.username),
@@ -214,37 +215,93 @@ export default class ChattingView extends Component {
   }
 
   chatWithTuling(message) {
-    let url = "https://app.yubo725.top/autoreply";
-    let formData = new FormData();
-    formData.append('key', message);
-    fetch(url, {method: 'POST', body: formData})
+    let url = "http://openapi.tuling123.com/openapi/api/v2";
+    let postjson = {
+      reqType: 0,
+      perception: {
+        inputText: {
+          text: message
+        },
+      },
+      userInfo: {
+        apiKey: "304facc0d9614db4b96d41c05d6161ac",
+        userId: "1"
+      }
+    }
+
+    fetch(url, {method: 'POST', body: JSON.stringify(postjson)})
       .then((res)=>res.json())
       .then((json)=>{
+        console.log(json)
         if (!Utils.isEmpty(json)) {
-          if (json.code == 1) {
+          if (json.intent.code > 10000) {
+            if(json.results.length > 0 ){
+              json.results.forEach(item => {
+                if (item.resultType == "text") {
+                  this.addAutoRelpyMsg(item.values.text);                
+                }else if (item.resultType == "image") {
+                  Image.getSize(item.values.image,(w,h)=>{
+                    this.addAutoRelpyImage(item.values.image, w,h);
+                  })
+                }else if (item.resultType == "url") {
+                  this.addAutoRelpyUrl(item.values.url);                  
+                }
+              });
+            }
             // 机器人的回复
-            let reply = json.msg;
-            this.addAutoRelpyMsg(reply);
+            // let reply = json.msg;
           } else {
-            ToastAndroid.show(json.msg, ToastAndroid.SHORT);
+            ToastAndroid.show(json.results[0].values.text, ToastAndroid.SHORT);
           }
         }
       })
   }
-
-  addAutoRelpyMsg(message) {
-    let id = WebIM.conn.getUniqueId();           // 生成本地消息id
-    let msg = new WebIM.message('txt', id);      // 创建文本消息
-    msg.set({
-      msg: message,                  // 消息内容
-      to: this.username,        // 接收消息对象（用户id）
-      roomType: false,
-      success: function (id, serverMsgId) {
-      },
-      fail: function (e) {
+  addAutoRelpyUrl(url) {
+    let id = Date.now() // 生成本地消息id
+    ConversationUtil.addMessage({
+      'conversationId': ConversationUtil.generateConversationId(this.chatContactId, this.username),
+      'id': id,
+      'from': this.chatContactId,
+      'to': this.username,
+      'time': TimeUtil.currentTime(),
+      'data': url,
+      'msgType': "url"
+    }, (error) => {
+      if(error){
+        console.error(error);
+      }else{
+        CountEmitter.emit('notifyChattingRefresh');
       }
     });
-    msg.body.chatType = 'singleChat';
+  }
+  addAutoRelpyImage(url,width,height){
+    let id = Date.now() // 生成本地消息id
+    ConversationUtil.addMessage({
+      'conversationId': ConversationUtil.generateConversationId(this.chatContactId, this.username),
+      'id': id,
+      'from': this.chatContactId,
+      'to': this.username,
+      'time': TimeUtil.currentTime(),
+      'url': url,
+      'ext': {width: width,height:height},
+      'msgType': "img"
+    }, () => {
+      CountEmitter.emit('notifyChattingRefresh');
+    });
+  }
+  addAutoRelpyMsg(message) {
+    let id = Date.now()           // 生成本地消息id
+    // let msg = new WebIM.message('txt', id);      // 创建文本消息
+    // msg.set({
+    //   msg: message,                  // 消息内容
+    //   to: this.username,        // 接收消息对象（用户id）
+    //   roomType: false,
+    //   success: function (id, serverMsgId) {
+    //   },
+    //   fail: function (e) {
+    //   }
+    // });
+    // msg.body.chatType = 'singleChat';
     ConversationUtil.addMessage({
       'conversationId': ConversationUtil.generateConversationId(this.chatContactId, this.username),
       'id': id,
@@ -252,8 +309,8 @@ export default class ChattingView extends Component {
       'to': this.username,
       'time': TimeUtil.currentTime(),
       'data': message,
-      'msgType': 'txt'
-    }, ()=>{
+      'msgType': "txt"
+    }, (error)=>{
       CountEmitter.emit('notifyChattingRefresh');
     });
   }
@@ -338,7 +395,7 @@ export default class ChattingView extends Component {
 
   renderItem = (item) => {
     let msgType = item.item.msgType;
-    if (msgType == 'txt') {
+    if (msgType == 'txt' || msgType == 'url') {
       // 文本消息
       if (item.item.to == this.username) {
         return this.renderReceivedTextMsg(item);

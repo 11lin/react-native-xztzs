@@ -84,7 +84,7 @@ export default class MainChatView extends Component {
     // 生成自动回复的对话
   generateAutoConversation(chatUsername) {
     let id = Date.now()
-    let message = '你好，我是RNWeChat作者，欢迎使用RNWeChat，有任何问题都可以与我交流！';
+    let message = '新版征途助手';
     if (chatUsername == 'tulingrobot') {
       message = '我是图灵机器人，开心或者不开心，都可以找我聊天~';
     }
@@ -98,8 +98,8 @@ export default class MainChatView extends Component {
       'data': message,
       'msgType': 'txt'
     }, ()=>{
-      if (chatUsername == 'tulingrobot' && this.state.username != 'yubo666') {
-        this.generateAutoConversation('yubo666');
+      if (chatUsername == 'tulingrobot' && this.state.username != '征途客服') {
+        this.generateAutoConversation('征途客服');
       } else {
         this.loadConversations(this.state.username);
       }
