@@ -37,10 +37,6 @@ export default class HomeBBSView extends Component {
           />
       )
   }
-  getProgress(offset) {
-      var progress = this.state.loadingProgress + offset;
-      return Math.sin(progress % Math.PI) % 1;
-  }
 
     ActivityIndicatorLoadingView() {
         //making a view to show to while loading the webpage
@@ -52,14 +48,6 @@ export default class HomeBBSView extends Component {
             />
         );
     }
-
-  wvRenderLoading(view) {
-    return (
-        <View style={styles.container}>
-            <ProgressViewIOS style={styles.progressView} progress={0.5}/>
-        </View>
-    );
-  }
 }
 
 

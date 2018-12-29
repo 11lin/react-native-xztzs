@@ -3584,6 +3584,11 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash.merge@^4.6.1:
+  version "4.6.1"
+  resolved "http://registry.npm.taobao.org/lodash.merge/download/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
+  integrity sha1-rcJdnLmbk5HFliTzefu6YNcRHVQ=
+
 lodash.pad@^4.1.0:
   version "4.5.1"
   resolved "http://registry.npm.taobao.org/lodash.pad/download/lodash.pad-4.5.1.tgz#4330949a833a7c8da22cc20f6a26c4d59debba70"
@@ -3609,7 +3614,12 @@ lodash.throttle@^4.1.1:
   resolved "http://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+lodash.times@^4.3.2:
+  version "4.3.2"
+  resolved "http://registry.npm.taobao.org/lodash.times/download/lodash.times-4.3.2.tgz#3e1f2565c431754d54ab57f2ed1741939285ca1d"
+  integrity sha1-Ph8lZcQxdU1Uq1fy7RdBk5KFyh0=
+
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.11"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
@@ -4326,6 +4336,11 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+opencollective-postinstall@^2.0.0:
+  version "2.0.1"
+  resolved "http://registry.npm.taobao.org/opencollective-postinstall/download/opencollective-postinstall-2.0.1.tgz#798e83e168f7b91949061c2683f762af747f17cc"
+  integrity sha1-eY6D4Wj3uRlJBhwmg/dir3R/F8w=
+
 opn@^3.0.2:
   version "3.0.3"
   resolved "http://registry.npm.taobao.org/opn/download/opn-3.0.3.tgz#b6d99e7399f78d65c3baaffef1fb288e9b85243a"
@@ -4752,6 +4767,16 @@ react-native-communications@2.2.1:
   version "2.2.1"
   resolved "http://registry.npm.taobao.org/react-native-communications/download/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
   integrity sha1-eIO1ayCgAu63kMET+GFuqGksp5U=
+
+react-native-elements@1.0.0-beta7:
+  version "1.0.0-beta7"
+  resolved "http://registry.npm.taobao.org/react-native-elements/download/react-native-elements-1.0.0-beta7.tgz#d732affc905079033a8b53343587f7c1dbc59834"
+  integrity sha1-1zKv/JBQeQM6i1M0NYf3wdvFmDQ=
+  dependencies:
+    lodash.merge "^4.6.1"
+    lodash.times "^4.3.2"
+    opencollective-postinstall "^2.0.0"
+    prop-types "^15.5.8"
 
 react-native-gesture-handler@^1.0.0, react-native-gesture-handler@^1.0.10:
   version "1.0.10"

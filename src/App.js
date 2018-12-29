@@ -21,6 +21,7 @@ import MainChatView from './views/MainChatView';
 import AssistView from './views/AssistView';
 import MeView from './views/MeView';
 import ChattingView from './views/ChattingView';
+import MeView2 from './views/MeView2';
 
 
 // const instructions = Platform.select({
