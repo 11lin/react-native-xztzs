@@ -6,9 +6,21 @@ react-native-cli: 2.0
 
 react-native: 0.57.6
 
-## 资料
+## 参考资料
 
-RNWeibo RNWechat
+https://github.com/lyxia/RNWeiBo
+
+https://gitee.com/yubo725/RNWeChat
+
+https://github.com/react-native-training
+
+https://apiko.com/blog/10-react-native-open-source-projects-you-must-know/
+
+https://github.com/ReactNativeNews/React-Native-Apps
+
+https://github.com/Monte9/react-native-elements-app
+
+https://github.com/stoneWeb/elm-react-native
 
 [图灵机器人](http://www.tuling123.com/)
 
